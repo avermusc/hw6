@@ -96,4 +96,30 @@ bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>
 {
 //add your solution here!
 
+	if (r >= board.size() || c >= board.size()){ //off board
+		return false;
+	}
+	word.push_back(board[r][c]);
+	bool validW = dict.count(word);
+	bool validP = prefix.count(word);
+	bool longerExists = false;
+	unsigned int nextr = r + dr;
+	unsigned int nextc = c + dc;
+
+	if (validW == false && validP == false){
+		return false;
+	}
+
+	if (nextr < board.size() && nextc < board.size()){
+		longerExists = boggleHelper(dict, prefix, board, word, result, nextr, nextc, dr, dc);
+	}
+
+	if (validW && longerExists == false){
+		result.insert(word);
+		return true;
+	}
+
+	return longerExists;
+
+
 }
